@@ -23,7 +23,6 @@ exports.debug = function(debug) {
 var cleanRules = [];
 
 module.exports.setCleanRules = function(rules) {
-  console.log('setCleanRules', rules);
   cleanRules = rules;
 };
 
