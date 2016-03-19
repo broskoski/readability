@@ -23,6 +23,7 @@ exports.debug = function(debug) {
 var cleanRules = [];
 
 module.exports.setCleanRules = function(rules) {
+  console.log('setCleanRules', rules);
   cleanRules = rules;
 };
 
@@ -382,11 +383,10 @@ function clean(e, tag) {
   var targetList = e.getElementsByTagName(tag);
   var isEmbed = (tag == 'object' || tag == 'embed');
 
-
-
   for (var y = targetList.length - 1; y >= 0; y--) {
     //------- user clean handler -----------------
     var validRule = false;
+    console.log('cleanRules', cleanRules.length);
     for (var i = 0; i < cleanRules.length; i++) {
       if (cleanRules[i](targetList[y], tag) === true) {
         validRule = true;
@@ -564,6 +564,7 @@ function prepArticle(articleContent) {
   if (articleContent.getElementsByTagName('h2').length === 1) clean(articleContent, "h2");
 
   clean(articleContent, "iframe");
+  clean(articleContent, "script");
 
   cleanHeaders(articleContent);
 
