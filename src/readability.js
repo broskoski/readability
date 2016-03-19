@@ -200,7 +200,7 @@ function read(html, options, callback) {
   if (['http:', 'https:', 'unix:', 'ftp:', 'sftp:'].indexOf(parsedURL.protocol) === -1) {
     jsdomParse(null, null, html);
   } else {
-    request(html, options, function(err, res, buffer) {
+    urlRequest = request(html, options, function(err, res, buffer) {
       if (err) {
         return callback(err);
       }
@@ -228,6 +228,11 @@ function read(html, options, callback) {
         jsdomParse(null, res, buffer);
       }
     });
+    if(options.req){
+      options.req.connection.on('abort', function(){
+        urlRequest.abort();
+      });
+    }
   }
 
   function jsdomParse(error, meta, body) {
